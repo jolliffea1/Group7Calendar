@@ -1,0 +1,10 @@
+# Compiled Java classes
+*.class
+
+# Eclipse project files
+.settings/
+.classpath
+.project
+
+# Mac
+.DS_Store
