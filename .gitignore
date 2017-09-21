@@ -6,5 +6,9 @@
 .classpath
 .project
 
+#IntelliJ project files
+/build/
+/.idea/
+
 # Mac
 .DS_Store
