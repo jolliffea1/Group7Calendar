@@ -1,10 +1,13 @@
 package com.NKU.group7calendar;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -19,25 +22,47 @@ public class CalendarApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // create an instance of the calendar, then get the current month and year
+        Calendar c = Calendar.getInstance();
+        int month = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        CalendarPane pane = new CalendarPane(9, 2014);
+        CalendarPane pane = new CalendarPane(month, year);
 
         BorderPane borderPane = new BorderPane(pane);
 
+        // button to move to the previous month
         Button btPrevious = new Button("Previous");
         btPrevious.setOnAction(e -> pane.previousMonth());
 
+        // button to move to the current month
+        Button btCurr = new Button("Current");
+        btCurr.setOnAction(e -> pane.currentMonth());
+
+        // button to move to the next month
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-        HBox bottomPane = new HBox(btPrevious, btNext);
+
+        ObservableList<String> allMonths =
+                FXCollections.observableArrayList(
+                        "January", "February", "March", "April",
+                        "May", "June", "July", "August",
+                        "September", "October", "November", "December"
+                );
+        final ComboBox comboBox = new ComboBox(allMonths);
+
+
+
+        HBox bottomPane = new HBox(btPrevious, btCurr, btNext);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
 
         borderPane.setBottom(bottomPane);
 
-        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 225);
+        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 260);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
         primaryStage.show();
@@ -137,6 +162,11 @@ public class CalendarApp extends Application {
 
         public void nextMonth() {
             cal.nextMonth();
+            draw();
+        }
+
+        public void currentMonth() {
+            cal.currentMonth();
             draw();
         }
 

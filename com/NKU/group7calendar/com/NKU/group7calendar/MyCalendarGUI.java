@@ -2,8 +2,13 @@ package com.NKU.group7calendar;
 
 public class MyCalendarGUI extends MyCalendar {
 
+    int startMonth = 0;
+    int startYear = 0;
+
     public MyCalendarGUI(int year, int month, int dayOfMonth) {
         super(year, month, dayOfMonth);
+        startMonth = month;
+        startYear = year;
     }
 
     public void nextDay() {
@@ -14,6 +19,11 @@ public class MyCalendarGUI extends MyCalendar {
         }else {
             set(DATE, get(DATE) + 1);
         }
+    }
+
+    public void currentMonth() {
+        set(MONTH, startMonth);
+        set(YEAR, startYear);
     }
 
     public void nextMonth() {
