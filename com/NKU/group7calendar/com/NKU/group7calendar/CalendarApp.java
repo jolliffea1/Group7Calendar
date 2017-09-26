@@ -28,7 +28,7 @@ public class CalendarApp extends Application {
         int year = c.get(Calendar.YEAR);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        CalendarPane pane = new CalendarPane(month, year);
+        CalendarPane pane = new CalendarPane(month+1, year);
 
         BorderPane borderPane = new BorderPane(pane);
 
