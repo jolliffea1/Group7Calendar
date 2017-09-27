@@ -1,4 +1,6 @@
-package com.NKU.group7calendar;
+package group7calendar;
+
+import group7calendar.MyCalendar;
 
 public class MyCalendarGUI extends MyCalendar {
 

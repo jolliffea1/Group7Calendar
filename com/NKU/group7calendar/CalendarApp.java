@@ -1,6 +1,8 @@
-package com.NKU.group7calendar;
+package group7calendar;
+
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,13 +13,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import java.awt.event.ActionEvent;
+import javax.swing.*;
 
+
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CalendarApp extends Application {
+public abstract class CalendarApp extends Application  {
 
+    Button btCreateEvent = new Button("Create Event");
+    ArrayList<Events> eventsArrayList = new ArrayList<Events>();
     @Override
     public void start(Stage primaryStage) throws Exception {
+
 
 
         CalendarPane pane = new CalendarPane(9, 2014);
@@ -29,6 +39,24 @@ public class CalendarApp extends Application {
 
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
+
+        /*Button btCreateEvent = new Button("Create Event");
+        btCreateEvent.setOnAction(e -> {
+                Events newEvent = new Events();
+                String month = JOptionPane.showInputDialog(btCreateEvent, "Enter the month as an integer");
+                newEvent.setEventMonth(Integer.parseInt(month));
+                String day = JOptionPane.showInputDialog(btCreateEvent, "Enter the day as an integer");
+                newEvent.setEventDay(Integer.parseInt(day));
+                String year = JOptionPane.showInputDialog(btCreateEvent, "Enter the year as an integer");
+                newEvent.setEventYear(Integer.parseInt(year));
+                String descrip = JOptionPane.showInputDialog(btCreateEvent, "Enter an event description.");
+                newEvent.setEventDescrip(descrip);
+                String start_time = JOptionPane.showInputDialog(btCreateEvent, "Enter the start time as 00:00");
+                newEvent.setEventStartTime(start_time);
+                String end_time = JOptionPane.showInputDialog(btCreateEvent, "Enter the end time as 00:00");
+                newEvent.setEventEndTime(end_time);
+                eventsArrayList.add(newEvent);
+            }); */
 
         HBox bottomPane = new HBox(btPrevious, btNext);
         bottomPane.setSpacing(10);
@@ -43,7 +71,8 @@ public class CalendarApp extends Application {
         primaryStage.show();
     }
 
-    private class CalendarPane extends GridPane {
+
+   private class CalendarPane extends GridPane {
 
         MyCalendarGUI cal;
         Label lblMonthYear;
@@ -144,6 +173,7 @@ public class CalendarApp extends Application {
             cal.previousMonth();
             draw();
         }
+
     }
     public static void main(String[] args) {
         Application.launch(args);

@@ -5,6 +5,7 @@
 .settings/
 .classpath
 .project
+build/
 
 # Mac
 .DS_Store
