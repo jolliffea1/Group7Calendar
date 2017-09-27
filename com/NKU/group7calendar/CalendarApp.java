@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 public abstract class CalendarApp extends Application  {
 
-    Button btCreateEvent = new Button("Create Event");
+    private boolean isShowingEvents = false;
     ArrayList<Events> eventsArrayList = new ArrayList<Events>();
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,8 +40,23 @@ public abstract class CalendarApp extends Application  {
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-        /*Button btCreateEvent = new Button("Create Event");
+        Button btCreateEvent = new Button("Create Event");
         btCreateEvent.setOnAction(e -> {
+                if (!this.isShowingEvents) {
+                    this.isShowingEvents = true;
+                    EventPane secondaryLayout = new EventPane();
+                    Scene secondScene = new Scene(secondaryLayout, 250.0D, 350.0D);
+                    Stage secondStage = new Stage();
+                    secondStage.setTitle("Todo List");
+                    secondStage.setScene(secondScene);
+                    secondStage.setX(primaryStage.getX() + 250.0D);
+                    secondStage.setY(primaryStage.getY() + 100.0D);
+                    secondStage.setOnCloseRequest((req) -> {
+                        this.isShowingEvents = false;
+                    });
+                    secondStage.show();
+                }
+            }); /*
                 Events newEvent = new Events();
                 String month = JOptionPane.showInputDialog(btCreateEvent, "Enter the month as an integer");
                 newEvent.setEventMonth(Integer.parseInt(month));
@@ -58,7 +73,7 @@ public abstract class CalendarApp extends Application  {
                 eventsArrayList.add(newEvent);
             }); */
 
-        HBox bottomPane = new HBox(btPrevious, btNext);
+        HBox bottomPane = new HBox(btPrevious, btNext, btCreateEvent);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
@@ -68,6 +83,7 @@ public abstract class CalendarApp extends Application  {
         Scene scene = new Scene(borderPane, pane.getPrefWidth(), 225);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
+        primaryStage.setOnCloseRequest(e->javafx.application.Platform.exit());
         primaryStage.show();
     }
 
