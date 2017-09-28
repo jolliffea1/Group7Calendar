@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<project name="Ant-Test" default="main" basedir=".">
+  <property name="src.dir" location="src" />
+  <property name="build.dir" location="bin" />
+  <property name="test.dir" location="src" />
+  <property name="test.report.dir" location="testreport" />
+
+  <target name="main" depends="compile, junit">
+    <description>Main target</description>
+  </target>
+</project> 
