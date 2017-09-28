@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.util.Calendar;
 
 public class CalendarApp extends Application {
+	
+	private boolean isShowingTodoList = false; // we disallow opening a new todo list window if one is already open
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -44,6 +46,30 @@ public class CalendarApp extends Application {
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
+        // button to open the TodoList window
+        Button btTodo = new Button("Todo List");
+        btTodo.setOnAction(e -> {
+        	
+        		if (isShowingTodoList) return;      	
+        		isShowingTodoList = true;
+
+        		TodoPane secondaryLayout = new TodoPane();         
+            Scene secondScene = new Scene(secondaryLayout, 250, 350);
+
+            Stage secondStage = new Stage();
+            secondStage.setTitle("Todo List");
+            secondStage.setScene(secondScene);
+             
+            secondStage.setX(primaryStage.getX() + 250);
+            secondStage.setY(primaryStage.getY() + 100);
+            
+            secondStage.setOnCloseRequest(req -> {
+            		isShowingTodoList = false;
+            });
+
+            secondStage.show();
+        });
+
         ObservableList<String> allMonths =
                 FXCollections.observableArrayList(
                         "January", "February", "March", "April",
@@ -52,7 +78,9 @@ public class CalendarApp extends Application {
                 );
         final ComboBox comboBox = new ComboBox(allMonths);
 
-        HBox bottomPane = new HBox(btPrevious, btCurr, btNext);
+
+        // add the buttons to the GUI
+        HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btTodo);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
@@ -62,6 +90,10 @@ public class CalendarApp extends Application {
         Scene scene = new Scene(borderPane, pane.getPrefWidth(), 260);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
+        
+        // close all windows when the primary stage closes
+        primaryStage.setOnCloseRequest(e -> javafx.application.Platform.exit());
+        
         primaryStage.show();
     }
 
