@@ -5,6 +5,10 @@
   <property name="test.dir" location="src" />
   <property name="test.report.dir" location="testreport" />
 
+  <target name="test" depends="compile, junit">
+    <description>Test target</description>
+  </target>
+  
   <target name="main" depends="compile, junit">
     <description>Main target</description>
   </target>
