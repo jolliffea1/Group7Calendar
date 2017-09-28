@@ -188,4 +188,6 @@
   <target name="build.modules" depends="init, clean, compile.module.group7calendar" description="build all modules"/>
   
   <target name="all" depends="build.modules" description="build all"/>
+
+  <target name="test" depends="all" description="build test"/>
 </project>
