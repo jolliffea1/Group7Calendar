@@ -41,7 +41,9 @@
   </target>
   
   <target name="test" depends="compile, junit">
-    <description>Test target</description>
+    <javac srcdir="${src.dir}" destdir="${build.dir}">
+      <classpath refid="junit.class.path" />
+    </javac>
   </target>
 
   <target name="main" depends="compile, junit">
