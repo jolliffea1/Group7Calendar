@@ -44,7 +44,6 @@ public class CalendarApp extends Application {
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-
         ObservableList<String> allMonths =
                 FXCollections.observableArrayList(
                         "January", "February", "March", "April",
@@ -52,8 +51,6 @@ public class CalendarApp extends Application {
                         "September", "October", "November", "December"
                 );
         final ComboBox comboBox = new ComboBox(allMonths);
-
-
 
         HBox bottomPane = new HBox(btPrevious, btCurr, btNext);
         bottomPane.setSpacing(10);
