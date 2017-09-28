@@ -48,5 +48,9 @@ public class Events {
     public String getEventEndTime(){
         return end_time;
     }
+    public String printEvent(){
+        return Integer.toString(month)+"/"+Integer.toString(day)+"/"+Integer.toString(year)+" start: "+ start_time+
+                " end: " + end_time + " description: " + descrip;
+    }
 
 }

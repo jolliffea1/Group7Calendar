@@ -16,11 +16,8 @@ public class EventView extends HBox {
 
         this.item = item;
 
-        getChildren().addAll(new Label(item.toString()));
+        getChildren().addAll(new Label(item.printEvent()));
     }
 
-    @Override
-    public String toString() {
-        return item.toString();
-    }
+
 }

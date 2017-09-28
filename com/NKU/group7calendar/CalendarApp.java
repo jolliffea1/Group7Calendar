@@ -1,62 +1,70 @@
+//kingm13@yahoo.com
 package group7calendar;
 
+        import javafx.application.Application;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ObservableList;
+        import javafx.geometry.Insets;
+        import javafx.geometry.Pos;
+        import javafx.scene.Scene;
+        import javafx.scene.control.Button;
+        import javafx.scene.control.ComboBox;
+        import javafx.scene.control.Label;
+        import javafx.scene.layout.BorderPane;
+        import javafx.scene.layout.GridPane;
+        import javafx.scene.layout.HBox;
+        import javafx.scene.paint.Color;
+        import javafx.stage.Stage;
 
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.awt.event.ActionEvent;
-import javax.swing.*;
+        import java.util.Calendar;
 
+public class CalendarApp extends Application {
 
+    private boolean isShowingEvents = false; // we disallow opening a new todo list window if one is already open
 
-import java.util.ArrayList;
-import java.util.Calendar;
-
-public abstract class CalendarApp extends Application  {
-
-    private boolean isShowingEvents = false;
-    ArrayList<Events> eventsArrayList = new ArrayList<Events>();
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        // create an instance of the calendar, then get the current month and year
+        Calendar c = Calendar.getInstance();
+        int month = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-
-        CalendarPane pane = new CalendarPane(9, 2014);
+        CalendarPane pane = new CalendarPane(month, year);
 
         BorderPane borderPane = new BorderPane(pane);
 
+        // button to move to the previous month
         Button btPrevious = new Button("Previous");
         btPrevious.setOnAction(e -> pane.previousMonth());
 
+        // button to move to the current month
+        Button btCurr = new Button("Current");
+        btCurr.setOnAction(e -> pane.currentMonth());
+
+        // button to move to the next month
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
+        // button to open the TodoList window
         Button btCreateEvent = new Button("Create Event");
         btCreateEvent.setOnAction(e -> {
-                if (!this.isShowingEvents) {
-                    this.isShowingEvents = true;
-                    EventPane secondaryLayout = new EventPane();
-                    Scene secondScene = new Scene(secondaryLayout, 250.0D, 350.0D);
-                    Stage secondStage = new Stage();
-                    secondStage.setTitle("Todo List");
-                    secondStage.setScene(secondScene);
-                    secondStage.setX(primaryStage.getX() + 250.0D);
-                    secondStage.setY(primaryStage.getY() + 100.0D);
-                    secondStage.setOnCloseRequest((req) -> {
-                        this.isShowingEvents = false;
-                    });
-                    secondStage.show();
-                }
-            }); /*
+            if (!this.isShowingEvents) {
+                this.isShowingEvents = true;
+                EventPane secondaryLayout = new EventPane();
+                Scene secondScene = new Scene(secondaryLayout, 800.0D, 600.0D);
+                Stage secondStage = new Stage();
+                secondStage.setTitle("Events");
+                secondStage.setScene(secondScene);
+                secondStage.setX(primaryStage.getX() + 250.0D);
+                secondStage.setY(primaryStage.getY() + 100.0D);
+                secondStage.setOnCloseRequest((req) -> {
+                    this.isShowingEvents = false;
+                });
+                secondStage.show();
+            }
+        }); /*
                 Events newEvent = new Events();
                 String month = JOptionPane.showInputDialog(btCreateEvent, "Enter the month as an integer");
                 newEvent.setEventMonth(Integer.parseInt(month));
@@ -73,22 +81,34 @@ public abstract class CalendarApp extends Application  {
                 eventsArrayList.add(newEvent);
             }); */
 
-        HBox bottomPane = new HBox(btPrevious, btNext, btCreateEvent);
+        ObservableList<String> allMonths =
+                FXCollections.observableArrayList(
+                        "January", "February", "March", "April",
+                        "May", "June", "July", "August",
+                        "September", "October", "November", "December"
+                );
+        final ComboBox comboBox = new ComboBox(allMonths);
+
+
+        // add the buttons to the GUI
+        HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btCreateEvent);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
 
         borderPane.setBottom(bottomPane);
 
-        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 225);
+        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 260);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
-        primaryStage.setOnCloseRequest(e->javafx.application.Platform.exit());
+
+        // close all windows when the primary stage closes
+        primaryStage.setOnCloseRequest(e -> javafx.application.Platform.exit());
+
         primaryStage.show();
     }
 
-
-   private class CalendarPane extends GridPane {
+    private class CalendarPane extends GridPane {
 
         MyCalendarGUI cal;
         Label lblMonthYear;
@@ -185,11 +205,15 @@ public abstract class CalendarApp extends Application  {
             draw();
         }
 
+        public void currentMonth() {
+            //cal.currentMonth();
+            draw();
+        }
+
         public void previousMonth() {
             cal.previousMonth();
             draw();
         }
-
     }
     public static void main(String[] args) {
         Application.launch(args);
