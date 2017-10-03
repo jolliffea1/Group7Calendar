@@ -1,5 +1,5 @@
 <project name="Group7Calendar" basedir="." default="main">
-    <property name="dir.src"     value="com/NKU/group7calendar"/>
+    <property name="dir.src"     value="com"/>
     <property name="dir.build"   value="build"/>
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
