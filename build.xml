@@ -4,7 +4,7 @@
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
 
-    <property name="main-class"  value="CalendarApp"/>
+    <property name="main-class"  value="com.NKU.group7calendarCalendarApp"/>
 
     <target name="clean">
         <delete dir="${dir.build}"/>
