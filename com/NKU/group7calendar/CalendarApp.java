@@ -1,5 +1,8 @@
 package com.NKU.group7calendar;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class CalendarApp extends Application {
@@ -30,10 +37,23 @@ public class CalendarApp extends Application {
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-        HBox bottomPane = new HBox(btPrevious, btNext);
+
+        //displays and updates current system time
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+        HBox bottomPane = new HBox(timeLabel, btPrevious, btNext);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
+
 
         borderPane.setBottom(bottomPane);
 
