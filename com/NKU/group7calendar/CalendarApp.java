@@ -64,23 +64,7 @@ public class CalendarApp extends Application {
                 });
                 secondStage.show();
             }
-        }); /*
-                Events newEvent = new Events();
-                String month = JOptionPane.showInputDialog(btCreateEvent, "Enter the month as an integer");
-                newEvent.setEventMonth(Integer.parseInt(month));
-                String day = JOptionPane.showInputDialog(btCreateEvent, "Enter the day as an integer");
-                newEvent.setEventDay(Integer.parseInt(day));
-                String year = JOptionPane.showInputDialog(btCreateEvent, "Enter the year as an integer");
-                newEvent.setEventYear(Integer.parseInt(year));
-                String descrip = JOptionPane.showInputDialog(btCreateEvent, "Enter an event description.");
-                newEvent.setEventDescrip(descrip);
-                String start_time = JOptionPane.showInputDialog(btCreateEvent, "Enter the start time as 00:00");
-                newEvent.setEventStartTime(start_time);
-                String end_time = JOptionPane.showInputDialog(btCreateEvent, "Enter the end time as 00:00");
-                newEvent.setEventEndTime(end_time);
-                eventsArrayList.add(newEvent);
-            }); */
-
+        });
         ObservableList<String> allMonths =
                 FXCollections.observableArrayList(
                         "January", "February", "March", "April",

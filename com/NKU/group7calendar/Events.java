@@ -4,11 +4,19 @@ public class Events {
     int month, day, year;
     String descrip, start_time, end_time;
 
-    public void Events(){
+    public Events(){
         month=0;
         day = 0;
         year = 0;
         descrip = "";
+        start_time = "";
+        end_time = "";
+    }
+    public Events(int x, int y, int z){
+        month = x;
+        day = y;
+        year = z;
+        descrip ="";
         start_time = "";
         end_time = "";
     }
