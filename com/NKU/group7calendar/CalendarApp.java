@@ -53,11 +53,11 @@ public class CalendarApp extends Application {
             if (!this.isShowingEvents) {
                 this.isShowingEvents = true;
                 EventPane secondaryLayout = new EventPane();
-                Scene secondScene = new Scene(secondaryLayout, 800.0D, 600.0D);
+                Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
                 Stage secondStage = new Stage();
                 secondStage.setTitle("Events");
                 secondStage.setScene(secondScene);
-                secondStage.setX(primaryStage.getX() + 250.0D);
+                secondStage.setX(primaryStage.getX() + 100.0D);
                 secondStage.setY(primaryStage.getY() + 100.0D);
                 secondStage.setOnCloseRequest((req) -> {
                     this.isShowingEvents = false;

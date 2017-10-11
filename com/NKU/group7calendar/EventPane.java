@@ -15,8 +15,10 @@ import java.util.Calendar;
 public class EventPane extends GridPane {
     private ObservableList<EventView> eventViews = FXCollections.observableArrayList();
     private ListView<EventView> listView = new ListView<EventView>(eventViews);
+
+    private ObservableList<String> amOrPm = FXCollections.observableArrayList("AM","PM");
     private int daysInMonth = 1;
-    private String[] amOrPm = {"AM","PM"};
+
     private int year = Calendar.getInstance().get(Calendar.YEAR);
 
     public EventPane() {
@@ -68,18 +70,30 @@ public class EventPane extends GridPane {
         GridPane.setRowIndex(startBox, 4);
         GridPane.setColumnIndex(startBox, 2);
 
-        TextField startTimeInput = new TextField();
+        SpinnerValueFactory<String> startValues = new SpinnerValueFactory.ListSpinnerValueFactory<String>(createTimes());
+        Spinner<String> startTimeInput = new Spinner<>(startValues);
         GridPane.setRowIndex(startTimeInput, 4);
         GridPane.setColumnIndex(startTimeInput, 3);
+
+        SpinnerValueFactory<String> middayValFac = new SpinnerValueFactory.ListSpinnerValueFactory<String>(amOrPm);
+        Spinner<String> startMeridies = new Spinner<>(middayValFac);
+        GridPane.setRowIndex(startMeridies, 4);
+        GridPane.setColumnIndex(startMeridies, 4);
 
         TextField endBox = new TextField("endTime:");
         endBox.setEditable(false);
         GridPane.setRowIndex(endBox, 4);
-        GridPane.setColumnIndex(endBox, 4);
+        GridPane.setColumnIndex(endBox, 5);
 
-        TextField endTimeInput = new TextField();
+        SpinnerValueFactory<String> endValues = new SpinnerValueFactory.ListSpinnerValueFactory<String>(createTimes());
+        Spinner<String> endTimeInput = new Spinner<>(endValues);
         GridPane.setRowIndex(endTimeInput, 4);
-        GridPane.setColumnIndex(endTimeInput, 5);
+        GridPane.setColumnIndex(endTimeInput, 6);
+
+        SpinnerValueFactory<String> endValFac = new SpinnerValueFactory.ListSpinnerValueFactory<String>(amOrPm);
+        Spinner<String> endMeridies = new Spinner<>(endValFac);
+        GridPane.setRowIndex(endMeridies, 4);
+        GridPane.setColumnIndex(endMeridies, 7);
 
         TextField descripBox = new TextField("descrip:");
         descripBox.setEditable(false);
@@ -95,24 +109,27 @@ public class EventPane extends GridPane {
         GridPane.setRowIndex(saveButton, 8);
         GridPane.setColumnIndex(saveButton, 4);
 
-        eventGrid.getChildren().addAll(monthBox, dayBox, yearBox, startBox, endBox, descripBox, saveButton, monthInput, dayInput, yearInput, startTimeInput, endTimeInput,descripInput);
+        eventGrid.getChildren().addAll(monthBox, dayBox, yearBox, startBox,
+                endBox, descripBox, saveButton, monthInput, dayInput, yearInput,
+                startTimeInput, startMeridies, endMeridies, endTimeInput,
+                descripInput);
 
         saveButton.setOnAction(e -> {
             Events newEvent = new Events();
             newEvent.setEventDay(dayInput.getValue());
             newEvent.setEventMonth(monthInput.getValue());
             newEvent.setEventYear(yearInput.getValue());
-            newEvent.setEventStartTime(startTimeInput.getText());
-            newEvent.setEventEndTime(endTimeInput.getText());
+            newEvent.setEventStartTime(startTimeInput.getValue()+startMeridies.getValue());
+            newEvent.setEventEndTime(endTimeInput.getValue()+endMeridies.getValue());
             newEvent.setEventDescrip(descripInput.getText());
             addEvents(newEvent);
 
-            startTimeInput.setText("");
-            endTimeInput.setText("");
+
+
             descripInput.setText("");
         });
 
-        //saveButton.disableProperty().bind(Bindings.isEmpty(monthInput.valueProperty()));
+        //saveButton.disableProperty().bind(Bindings.isEmpty(descripInput.getText());
 
         setRowIndex(listView, 9);
         setColumnIndex(listView, 0);
@@ -170,18 +187,30 @@ public class EventPane extends GridPane {
         GridPane.setRowIndex(startBox, 4);
         GridPane.setColumnIndex(startBox, 2);
 
-        TextField startTimeInput = new TextField();
+        SpinnerValueFactory<String> startValues = new SpinnerValueFactory.ListSpinnerValueFactory<String>(createTimes());
+        Spinner<String> startTimeInput = new Spinner<>(startValues);
         GridPane.setRowIndex(startTimeInput, 4);
         GridPane.setColumnIndex(startTimeInput, 3);
+
+        SpinnerValueFactory<String> middayValFac = new SpinnerValueFactory.ListSpinnerValueFactory<String>(amOrPm);
+        Spinner<String> startMeridies = new Spinner<>(middayValFac);
+        GridPane.setRowIndex(startMeridies, 4);
+        GridPane.setColumnIndex(startMeridies, 4);
 
         TextField endBox = new TextField("endTime:");
         endBox.setEditable(false);
         GridPane.setRowIndex(endBox, 4);
-        GridPane.setColumnIndex(endBox, 4);
+        GridPane.setColumnIndex(endBox, 5);
 
-        TextField endTimeInput = new TextField();
+        SpinnerValueFactory<String> endValues = new SpinnerValueFactory.ListSpinnerValueFactory<String>(createTimes());
+        Spinner<String> endTimeInput = new Spinner<>(endValues);
         GridPane.setRowIndex(endTimeInput, 4);
-        GridPane.setColumnIndex(endTimeInput, 5);
+        GridPane.setColumnIndex(endTimeInput, 6);
+
+        SpinnerValueFactory<String> endValFac = new SpinnerValueFactory.ListSpinnerValueFactory<String>(amOrPm);
+        Spinner<String> endMeridies = new Spinner<>(endValFac);
+        GridPane.setRowIndex(endMeridies, 4);
+        GridPane.setColumnIndex(endMeridies, 7);
 
         TextField descripBox = new TextField("descrip:");
         descripBox.setEditable(false);
@@ -197,23 +226,23 @@ public class EventPane extends GridPane {
         GridPane.setRowIndex(saveButton, 8);
         GridPane.setColumnIndex(saveButton, 4);
 
-        eventGrid.getChildren().addAll(monthBox, dayBox, yearBox, startBox, endBox, descripBox, saveButton, monthInput, dayInput, yearInput, startTimeInput, endTimeInput,descripInput);
+        eventGrid.getChildren().addAll(monthBox, dayBox, yearBox, startBox,
+                endBox, descripBox, saveButton, monthInput, dayInput, yearInput,
+                startTimeInput, startMeridies, endMeridies, endTimeInput,
+                descripInput);
 
         saveButton.setOnAction(e -> {
             Events newEvent = new Events();
             newEvent.setEventDay(dayInput.getValue());
             newEvent.setEventMonth(monthInput.getValue());
             newEvent.setEventYear(yearInput.getValue());
-            newEvent.setEventStartTime(startTimeInput.getText());
-            newEvent.setEventEndTime(endTimeInput.getText());
+            newEvent.setEventStartTime(startTimeInput.getValue()+startMeridies.getValue());
+            newEvent.setEventEndTime(endTimeInput.getValue()+endMeridies.getValue());
             newEvent.setEventDescrip(descripInput.getText());
             addEvents(newEvent);
 
-            startTimeInput.setText("");
-            endTimeInput.setText("");
             descripInput.setText("");
         });
-
         //saveButton.disableProperty().bind(Bindings.isEmpty(monthInput.valueProperty()));
 
         setRowIndex(listView, 9);
@@ -223,16 +252,18 @@ public class EventPane extends GridPane {
 
     }
     //Creates a string array of times in 15 min increments
-    private String[] createTimes(){
-        String[] timeString = new String[48];
-        int i = 0;
-        for(int hours = 0; hours < 12 ;hours++){
+    private ObservableList createTimes(){
+        ObservableList<String> times = FXCollections.observableArrayList();
+        times.add("12:00");
+        times.add("12:15");
+        times.add("12:30");
+        times.add("12:45");
+        for(int hours = 1; hours <= 12 ;hours++){
             for(int minutes = 0; minutes<60; minutes+=15) {
-                timeString[i] = String.format("%02d", (hours+1)%12) + ":" + String.format("%02d", minutes);
-                i++;
+                times.add(String.format("%02d",hours) + ":" + String.format("%02d", minutes));
             }
         }
-        return timeString;
+        return times;
     }
     private void addEvents(Events x) {
         EventView view = new EventView(x);
