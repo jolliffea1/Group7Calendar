@@ -1,5 +1,6 @@
 package com.NKU.group7calendar;
 
+import group7calendar.CreateDB;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +28,24 @@ public class CalendarApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        CreateDB createdb = new CreateDB();
+        ResultSet rs;
+
+/*        rs = createdb.hasConnection();
+        while(rs.next()) {
+            System.out.println(rs.getString("testEvent"));
+        }*/
+        try {
+            rs = createdb.hasConnection();
+            while(rs.next()) {
+                System.out.println(rs.getString("calendarEvent"));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         CalendarPane pane = new CalendarPane(9, 2014);
