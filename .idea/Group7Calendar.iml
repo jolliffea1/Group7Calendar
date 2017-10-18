@@ -3,7 +3,11 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+<<<<<<< HEAD
       <sourceFolder url="file://$MODULE_DIR$/com/NKU/group7calendar" isTestSource="false" />
+=======
+      <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+>>>>>>> createEvents
       <sourceFolder url="file://$MODULE_DIR$/com" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/com/NKU" isTestSource="false" />
     </content>

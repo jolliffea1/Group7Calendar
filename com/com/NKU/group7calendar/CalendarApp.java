@@ -1,3 +1,4 @@
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
 package com.NKU.group7calendar;
 
 import javafx.application.Application;
@@ -16,10 +17,33 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.Calendar;
+=======
+//kingm13@yahoo.com
+package group7calendar;
+
+        import javafx.application.Application;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ObservableList;
+        import javafx.geometry.Insets;
+        import javafx.geometry.Pos;
+        import javafx.scene.Scene;
+        import javafx.scene.control.Button;
+        import javafx.scene.control.ComboBox;
+        import javafx.scene.control.Label;
+        import javafx.scene.layout.BorderPane;
+        import javafx.scene.layout.GridPane;
+        import javafx.scene.layout.HBox;
+        import javafx.scene.paint.Color;
+        import javafx.stage.Stage;
+
+        import java.util.Calendar;
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
 
 public class CalendarApp extends Application {
 	
 	private boolean isShowingTodoList = false; // we disallow opening a new todo list window if one is already open
+
+    private boolean isShowingEvents = false; // we disallow opening a new todo list window if one is already open
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,7 +54,11 @@ public class CalendarApp extends Application {
         int year = c.get(Calendar.YEAR);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
         CalendarPane pane = new CalendarPane(month+1, year);
+=======
+        CalendarPane pane = new CalendarPane(month, year);
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
 
         BorderPane borderPane = new BorderPane(pane);
 
@@ -47,6 +75,7 @@ public class CalendarApp extends Application {
         btNext.setOnAction(e -> pane.nextMonth());
 
         // button to open the TodoList window
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
         Button btTodo = new Button("Todo List");
         btTodo.setOnAction(e -> {
         	
@@ -70,6 +99,25 @@ public class CalendarApp extends Application {
             secondStage.show();
         });
 
+=======
+        Button btCreateEvent = new Button("Create Event");
+        btCreateEvent.setOnAction(e -> {
+            if (!this.isShowingEvents) {
+                this.isShowingEvents = true;
+                EventPane secondaryLayout = new EventPane();
+                Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
+                Stage secondStage = new Stage();
+                secondStage.setTitle("Events");
+                secondStage.setScene(secondScene);
+                secondStage.setX(primaryStage.getX() + 100.0D);
+                secondStage.setY(primaryStage.getY() + 100.0D);
+                secondStage.setOnCloseRequest((req) -> {
+                    this.isShowingEvents = false;
+                });
+                secondStage.show();
+            }
+        });
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
         ObservableList<String> allMonths =
                 FXCollections.observableArrayList(
                         "January", "February", "March", "April",
@@ -80,7 +128,11 @@ public class CalendarApp extends Application {
 
 
         // add the buttons to the GUI
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
         HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btTodo);
+=======
+        HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btCreateEvent);
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
@@ -90,10 +142,17 @@ public class CalendarApp extends Application {
         Scene scene = new Scene(borderPane, pane.getPrefWidth(), 260);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
         
         // close all windows when the primary stage closes
         primaryStage.setOnCloseRequest(e -> javafx.application.Platform.exit());
         
+=======
+
+        // close all windows when the primary stage closes
+        primaryStage.setOnCloseRequest(e -> javafx.application.Platform.exit());
+
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
         primaryStage.show();
     }
 
@@ -195,7 +254,11 @@ public class CalendarApp extends Application {
         }
 
         public void currentMonth() {
+<<<<<<< HEAD:com/com/NKU/group7calendar/CalendarApp.java
             cal.currentMonth();
+=======
+            //cal.currentMonth();
+>>>>>>> createEvents:com/NKU/group7calendar/CalendarApp.java
             draw();
         }
 

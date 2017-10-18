@@ -5,6 +5,7 @@
 .settings/
 .classpath
 .project
+build/
 
 #IntelliJ project files
 /build/
