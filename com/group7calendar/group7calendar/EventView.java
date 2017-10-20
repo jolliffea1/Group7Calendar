@@ -1,5 +1,6 @@
-package group7calendar;
- //EventView
+package group7calendar.group7calendar;
+
+//EventView
 
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;

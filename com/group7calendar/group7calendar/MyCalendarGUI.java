@@ -1,6 +1,4 @@
-package group7calendar;
-
-import group7calendar.MyCalendar;
+package group7calendar.group7calendar;
 
 public class MyCalendarGUI extends MyCalendar {
 

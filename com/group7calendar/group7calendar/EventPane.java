@@ -1,14 +1,13 @@
-package group7calendar;
+package group7calendar.group7calendar;
+
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 
-import javax.swing.event.ChangeEvent;
 import java.time.YearMonth;
 import java.util.Calendar;
 
@@ -129,7 +128,7 @@ public class EventPane extends GridPane {
             descripInput.setText("");
         });
 
-        //saveButton.disableProperty().bind(Bindings.isEmpty(descripInput.getText());
+        saveButton.disableProperty().bind(Bindings.isEmpty(descripInput.textProperty()));
 
         setRowIndex(listView, 9);
         setColumnIndex(listView, 0);
@@ -243,7 +242,7 @@ public class EventPane extends GridPane {
 
             descripInput.setText("");
         });
-        //saveButton.disableProperty().bind(Bindings.isEmpty(monthInput.valueProperty()));
+        saveButton.disableProperty().bind(Bindings.isEmpty(descripInput.textProperty()));
 
         setRowIndex(listView, 9);
         setColumnIndex(listView, 0);
