@@ -32,13 +32,20 @@ public class CreateDB {
 
                 Statement state2 = con.createStatement();
                 state2.execute("CREATE TABLE eventTable(id integer,"
-                            //+ "hourkey integer,"
-                            //+ "minutekey integer,"
-                            + "calendarEvent varchar(100),"
+                            + "calendarDate varchar(20),"
+                            + "calendarTime varchar(20),"
+                            + "calendarEvent varchar(160),"
                             + "primary key(id));");
 
-                PreparedStatement prep = con.prepareStatement("INSERT INTO eventTable values(?,?);");
-                prep.setString(2, "testEvent");
+                Statement state3 = con.createStatement();
+                state3.execute("CREATE TABLE todoTable(id integer,"
+                        + "todoEvent varchar(160),"
+                        + "primary key(id));");
+
+                PreparedStatement prep = con.prepareStatement("INSERT INTO eventTable values(?,?,?,?);");
+                prep.setString(2,"testDate");
+                prep.setString(3,"testTime");
+                prep.setString(4,"testEvent");
                 prep.execute();
             }
         }
