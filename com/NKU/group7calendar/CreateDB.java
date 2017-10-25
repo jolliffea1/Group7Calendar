@@ -1,4 +1,4 @@
-package group7calendar;
+package com.NKU.group7calendar;
 
 import java.sql.*;
 

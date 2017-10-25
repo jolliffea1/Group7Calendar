@@ -1,6 +1,5 @@
 package com.NKU.group7calendar;
 
-import group7calendar.CreateDB;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,10 +31,6 @@ public class CalendarApp extends Application {
         CreateDB createdb = new CreateDB();
         ResultSet rs;
 
-/*        rs = createdb.hasConnection();
-        while(rs.next()) {
-            System.out.println(rs.getString("testEvent"));
-        }*/
         try {
             rs = createdb.hasConnection();
             while(rs.next()) {
