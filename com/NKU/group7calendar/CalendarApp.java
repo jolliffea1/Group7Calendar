@@ -4,13 +4,10 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,15 +22,9 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-//kingm13@yahoo.com
-
-
-
-
 public class CalendarApp extends Application {
 	
-	private boolean isShowingTodoList = false; // we disallow opening a new todo list window if one is already open
-    private boolean isShowingEvents = false; // we disallow opening a new todo list window if one is already open
+	private boolean isShowingSecondaryWindow = false; 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -77,11 +68,11 @@ public class CalendarApp extends Application {
         Button btTodo = new Button("Todo List");
         btTodo.setOnAction(e -> {
         	
-        		if (isShowingTodoList) return;      	
-        		isShowingTodoList = true;
+        		if (isShowingSecondaryWindow) return;      	
+        		isShowingSecondaryWindow = true;
 
         		TodoPane secondaryLayout = new TodoPane();
-            Scene secondScene = new Scene(secondaryLayout, 250, 350);
+            Scene secondScene = new Scene(secondaryLayout, 300, 400);
 
             Stage secondStage = new Stage();
             secondStage.setTitle("Todo List");
@@ -91,7 +82,7 @@ public class CalendarApp extends Application {
             secondStage.setY(primaryStage.getY() + 100);
             
             secondStage.setOnCloseRequest(req -> {
-            		isShowingTodoList = false;
+            	isShowingSecondaryWindow = false;
             });
 
             secondStage.show();
@@ -99,8 +90,8 @@ public class CalendarApp extends Application {
 
         Button btCreateEvent = new Button("Create Event");
         btCreateEvent.setOnAction(e -> {
-            if (!this.isShowingEvents) {
-                this.isShowingEvents = true;
+            if (!this.isShowingSecondaryWindow) {
+                this.isShowingSecondaryWindow = true;
                 EventPane secondaryLayout = new EventPane();
                 Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
                 Stage secondStage = new Stage();
@@ -109,19 +100,11 @@ public class CalendarApp extends Application {
                 secondStage.setX(primaryStage.getX() + 100.0D);
                 secondStage.setY(primaryStage.getY() + 100.0D);
                 secondStage.setOnCloseRequest((req) -> {
-                    this.isShowingEvents = false;
+                    this.isShowingSecondaryWindow = false;
                 });
                 secondStage.show();
             }
         });
-
-        ObservableList<String> allMonths =
-                FXCollections.observableArrayList(
-                        "January", "February", "March", "April",
-                        "May", "June", "July", "August",
-                        "September", "October", "November", "December"
-                );
-        final ComboBox comboBox = new ComboBox(allMonths);
         
         //displays and updates current system time
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
