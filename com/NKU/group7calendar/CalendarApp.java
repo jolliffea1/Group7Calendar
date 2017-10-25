@@ -1,6 +1,8 @@
 package com.NKU.group7calendar;
 
-
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,8 +17,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-
+import javafx.util.Duration;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 //kingm13@yahoo.com
@@ -27,7 +33,6 @@ import java.util.Calendar;
 public class CalendarApp extends Application {
 	
 	private boolean isShowingTodoList = false; // we disallow opening a new todo list window if one is already open
-
     private boolean isShowingEvents = false; // we disallow opening a new todo list window if one is already open
 
     @Override
@@ -37,11 +42,22 @@ public class CalendarApp extends Application {
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH);
         int year = c.get(Calendar.YEAR);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
 
         CalendarPane pane = new CalendarPane(month+1, year);
 
+        CreateDB createdb = new CreateDB();
+        ResultSet rs;
+
+        try {
+            rs = createdb.hasConnection();
+            while(rs.next()) {
+                System.out.println(rs.getString("calendarEvent"));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         BorderPane borderPane = new BorderPane(pane);
 
@@ -58,7 +74,6 @@ public class CalendarApp extends Application {
         btNext.setOnAction(e -> pane.nextMonth());
 
         // button to open the TodoList window
-
         Button btTodo = new Button("Todo List");
         btTodo.setOnAction(e -> {
         	
@@ -107,15 +122,25 @@ public class CalendarApp extends Application {
                         "September", "October", "November", "December"
                 );
         final ComboBox comboBox = new ComboBox(allMonths);
-
+        
+        //displays and updates current system time
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+        }),
+                new KeyFrame(Duration.seconds(1))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
         // add the buttons to the GUI
-
-        HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btTodo, btCreateEvent);
+        HBox bottomPane = new HBox(timeLabel, btPrevious, btCurr, btNext, btTodo, btCreateEvent);
 
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
+
 
         borderPane.setBottom(bottomPane);
 
