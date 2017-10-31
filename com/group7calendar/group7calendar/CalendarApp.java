@@ -1,133 +1,52 @@
-package group7calendar.group7calendar;
+package com.NKU.group7calendar;
 
-
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
-//kingm13@yahoo.com
-
-
-
-
 public class CalendarApp extends Application {
-	
-	private boolean isShowingTodoList = false; // we disallow opening a new todo list window if one is already open
-
-    private boolean isShowingEvents = false; // we disallow opening a new todo list window if one is already open
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        // create an instance of the calendar, then get the current month and year
-        Calendar c = Calendar.getInstance();
-        int month = c.get(Calendar.MONTH);
-        int year = c.get(Calendar.YEAR);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
-
-        CalendarPane pane = new CalendarPane(month+1, year);
-
+        CalendarPane pane = new CalendarPane(9, 2014);
 
         BorderPane borderPane = new BorderPane(pane);
 
-        // button to move to the previous month
         Button btPrevious = new Button("Previous");
         btPrevious.setOnAction(e -> pane.previousMonth());
 
-        // button to move to the current month
-        Button btCurr = new Button("Current");
-        btCurr.setOnAction(e -> pane.currentMonth());
-
-        // button to move to the next month
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-        // button to open the TodoList window
 
-        Button btTodo = new Button("Todo List");
-        btTodo.setOnAction(e -> {
-        	
-        		if (isShowingTodoList) return;      	
-        		isShowingTodoList = true;
-
-        		TodoPane secondaryLayout = new TodoPane();
-            Scene secondScene = new Scene(secondaryLayout, 250, 350);
-
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Todo List");
-            secondStage.setScene(secondScene);
-             
-            secondStage.setX(primaryStage.getX() + 250);
-            secondStage.setY(primaryStage.getY() + 100);
-            
-            secondStage.setOnCloseRequest(req -> {
-            		isShowingTodoList = false;
-            });
-
-            secondStage.show();
-        });
-
-        Button btCreateEvent = new Button("Create Event");
-        btCreateEvent.setOnAction(e -> {
-            if (!this.isShowingEvents) {
-                this.isShowingEvents = true;
-                EventPane secondaryLayout = new EventPane();
-                Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
-                Stage secondStage = new Stage();
-                secondStage.setTitle("Events");
-                secondStage.setScene(secondScene);
-                secondStage.setX(primaryStage.getX() + 100.0D);
-                secondStage.setY(primaryStage.getY() + 100.0D);
-                secondStage.setOnCloseRequest((req) -> {
-                    this.isShowingEvents = false;
-                });
-                secondStage.show();
-            }
-        });
-
-        ObservableList<String> allMonths =
-                FXCollections.observableArrayList(
-                        "January", "February", "March", "April",
-                        "May", "June", "July", "August",
-                        "September", "October", "November", "December"
-                );
-        final ComboBox comboBox = new ComboBox(allMonths);
-
-
-        // add the buttons to the GUI
-
-        HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btTodo, btCreateEvent);
-
+        HBox bottomPane = new HBox(btPrevious, btNext);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
 
         borderPane.setBottom(bottomPane);
 
-        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 260);
+        Scene scene = new Scene(borderPane, pane.getPrefWidth(), 225);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Calendar");
-
-        
-        // close all windows when the primary stage closes
-        primaryStage.setOnCloseRequest(e -> javafx.application.Platform.exit());
-        
-
         primaryStage.show();
     }
 
@@ -158,6 +77,22 @@ public class CalendarApp extends Application {
         private void draw() {
 
             getChildren().clear();
+
+            //displays and updates current system time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+
+            //add timeline
+            HBox leftPane = new HBox(timeLabel);
+            leftPane.setAlignment(Pos.TOP_LEFT);
+            add(leftPane, 0, 0, 7, 1);
 
             // Title
             lblMonthYear = new Label(cal.getMonthName() + ", " + cal.get(Calendar.YEAR));
@@ -225,13 +160,6 @@ public class CalendarApp extends Application {
 
         public void nextMonth() {
             cal.nextMonth();
-            draw();
-        }
-
-        public void currentMonth() {
-
-            cal.currentMonth();
-
             draw();
         }
 

@@ -6,10 +6,7 @@
 .classpath
 .project
 build/
-
-#IntelliJ project files
-/build/
-/.idea/
+calendardb.db
 
 # Mac
 .DS_Store
