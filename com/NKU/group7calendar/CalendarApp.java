@@ -1,6 +1,5 @@
 package com.NKU.group7calendar;
 
-import group7calendar.CreateDB;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,8 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -28,25 +25,6 @@ public class CalendarApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        CreateDB createdb = new CreateDB();
-        ResultSet rs;
-
-/*        rs = createdb.hasConnection();
-        while(rs.next()) {
-            System.out.println(rs.getString("testEvent"));
-        }*/
-        try {
-            rs = createdb.hasConnection();
-            while(rs.next()) {
-                System.out.println(rs.getString("calendarEvent"));
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
 
         CalendarPane pane = new CalendarPane(9, 2014);
 
@@ -59,22 +37,10 @@ public class CalendarApp extends Application {
         btNext.setOnAction(e -> pane.nextMonth());
 
 
-        //displays and updates current system time
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
-        }),
-                new KeyFrame(Duration.seconds(1))
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
-        HBox bottomPane = new HBox(timeLabel, btPrevious, btNext);
+        HBox bottomPane = new HBox(btPrevious, btNext);
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
-
 
         borderPane.setBottom(bottomPane);
 
@@ -111,6 +77,22 @@ public class CalendarApp extends Application {
         private void draw() {
 
             getChildren().clear();
+
+            //displays and updates current system time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+
+            //add timeline
+            HBox leftPane = new HBox(timeLabel);
+            leftPane.setAlignment(Pos.TOP_LEFT);
+            add(leftPane, 0, 0, 7, 1);
 
             // Title
             lblMonthYear = new Label(cal.getMonthName() + ", " + cal.get(Calendar.YEAR));
