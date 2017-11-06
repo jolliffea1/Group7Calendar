@@ -15,51 +15,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-<<<<<<< HEAD:com/group7calendar/group7calendar/CalendarApp.java
 
-=======
-import java.sql.ResultSet;
-import java.sql.SQLException;
->>>>>>> 7fb33b94edcc88875211e2b85269ef785fa7a5a7:com/NKU/group7calendar/CalendarApp.java
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 public class CalendarApp extends Application {
-<<<<<<< HEAD:com/group7calendar/group7calendar/CalendarApp.java
-=======
-	
-	private boolean isShowingSecondaryWindow = false; 
->>>>>>> 7fb33b94edcc88875211e2b85269ef785fa7a5a7:com/NKU/group7calendar/CalendarApp.java
 
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-<<<<<<< HEAD:com/group7calendar/group7calendar/CalendarApp.java
         CalendarPane pane = new CalendarPane(9, 2014);
-=======
-        // create an instance of the calendar, then get the current month and year
-        Calendar c = Calendar.getInstance();
-        int month = c.get(Calendar.MONTH);
-        int year = c.get(Calendar.YEAR);
-
-        CalendarPane pane = new CalendarPane(month+1, year);
-
-        CreateDB createdb = new CreateDB();
-        ResultSet rs;
-
-        try {
-            rs = createdb.hasConnection();
-            while(rs.next()) {
-                System.out.println(rs.getString("calendarEvent"));
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
->>>>>>> 7fb33b94edcc88875211e2b85269ef785fa7a5a7:com/NKU/group7calendar/CalendarApp.java
 
         BorderPane borderPane = new BorderPane(pane);
 
@@ -69,67 +36,8 @@ public class CalendarApp extends Application {
         Button btNext = new Button("Next");
         btNext.setOnAction(e -> pane.nextMonth());
 
-<<<<<<< HEAD:com/group7calendar/group7calendar/CalendarApp.java
 
         HBox bottomPane = new HBox(btPrevious, btNext);
-=======
-        // button to open the TodoList window
-        Button btTodo = new Button("Todo List");
-        btTodo.setOnAction(e -> {
-        	
-        		if (isShowingSecondaryWindow) return;      	
-        		isShowingSecondaryWindow = true;
-
-        		TodoPane secondaryLayout = new TodoPane();
-            Scene secondScene = new Scene(secondaryLayout, 300, 400);
-
-            Stage secondStage = new Stage();
-            secondStage.setTitle("Todo List");
-            secondStage.setScene(secondScene);
-             
-            secondStage.setX(primaryStage.getX() + 250);
-            secondStage.setY(primaryStage.getY() + 100);
-            
-            secondStage.setOnCloseRequest(req -> {
-            	isShowingSecondaryWindow = false;
-            });
-
-            secondStage.show();
-        });
-
-        Button btCreateEvent = new Button("Create Event");
-        btCreateEvent.setOnAction(e -> {
-            if (!this.isShowingSecondaryWindow) {
-                this.isShowingSecondaryWindow = true;
-                EventPane secondaryLayout = new EventPane();
-                Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
-                Stage secondStage = new Stage();
-                secondStage.setTitle("Events");
-                secondStage.setScene(secondScene);
-                secondStage.setX(primaryStage.getX() + 100.0D);
-                secondStage.setY(primaryStage.getY() + 100.0D);
-                secondStage.setOnCloseRequest((req) -> {
-                    this.isShowingSecondaryWindow = false;
-                });
-                secondStage.show();
-            }
-        });
-        
-        //displays and updates current system time
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-        Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-            timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
-        }),
-                new KeyFrame(Duration.seconds(1))
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-
-        // add the buttons to the GUI
-        HBox bottomPane = new HBox(timeLabel, btPrevious, btCurr, btNext, btTodo, btCreateEvent);
-
->>>>>>> 7fb33b94edcc88875211e2b85269ef785fa7a5a7:com/NKU/group7calendar/CalendarApp.java
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);

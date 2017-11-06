@@ -1,4 +1,4 @@
-package com.NKU.group7calendar;
+package group7calendar.group7calendar;
 
 public class Events {
     int month, day, year;

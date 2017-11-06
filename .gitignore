@@ -6,13 +6,6 @@
 .classpath
 .project
 build/
-<<<<<<< HEAD
-=======
-
-#IntelliJ project files
-/build/
-/.idea/
->>>>>>> 7fb33b94edcc88875211e2b85269ef785fa7a5a7
 calendardb.db
 
 # Mac
