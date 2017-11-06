@@ -1,4 +1,4 @@
-package group7calendar.group7calendar;
+package com.NKU.group7calendar;
 
 
 import javafx.beans.binding.Bindings;
