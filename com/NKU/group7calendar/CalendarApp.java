@@ -1,5 +1,6 @@
 package com.NKU.group7calendar;
 
+import group7calendar.currentTimeFormatter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -81,8 +82,10 @@ public class CalendarApp extends Application {
             //displays and updates current system time
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            currentTimeFormatter ct = new currentTimeFormatter();
+
             final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-                timeLabel.setText(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+                timeLabel.setText(ct.getCurrentTime(LocalTime.now(ZoneId.systemDefault()).format(dtf)));
             }),
                     new KeyFrame(Duration.seconds(1))
             );
