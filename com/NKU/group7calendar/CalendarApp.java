@@ -15,8 +15,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 //kingm13@yahoo.com
@@ -158,6 +162,26 @@ public class CalendarApp extends Application {
         private void draw() {
 
             getChildren().clear();
+
+            //displays and updates current system time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            currentTimeFormatter ct = new currentTimeFormatter();
+
+            /*
+            final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                timeLabel.setText(ct.getCurrentTime(LocalTime.now(ZoneId.systemDefault()).format(dtf)));
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+            */
+
+            //add timeline
+            HBox leftPane = new HBox(timeLabel);
+            leftPane.setAlignment(Pos.TOP_LEFT);
+            add(leftPane, 0, 0, 7, 1);
 
             // Title
             lblMonthYear = new Label(cal.getMonthName() + ", " + cal.get(Calendar.YEAR));

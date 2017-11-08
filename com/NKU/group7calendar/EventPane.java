@@ -1,6 +1,5 @@
 package com.NKU.group7calendar;
 
-
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
