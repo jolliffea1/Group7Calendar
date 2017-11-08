@@ -42,7 +42,7 @@ public class CalendarApp extends Application {
         int year = c.get(Calendar.YEAR);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        CalendarPane pane = new CalendarPane(month+1, year);
+        CalendarPane pane = new CalendarPane(month, year);
         //mydayButtons = pane.getDayButtons();
         MyCalendar mine = pane.getCal();
         BorderPane borderPane = new BorderPane(pane);
@@ -311,7 +311,7 @@ public class CalendarApp extends Application {
                 int myday = i + 1;
                 dayButtons[i].setOnAction(e -> {
                         //this.isShowingEvents = true;
-                        EventPane secondaryLayout = new EventPane(cal.getCurrentMonth()+1, myday ,cal.getCurrentYear(),username);
+                        EventPane secondaryLayout = new EventPane(MyCalendarGUI.MONTH+1, myday ,MyCalendarGUI.YEAR,username);
                         Scene secondScene = new Scene(secondaryLayout, 800.0D, 600.0D);
                         Stage secondStage = new Stage();
                         secondStage.setTitle("Events");
