@@ -1,14 +1,17 @@
 package com.NKU.group7calendar;
 
+import java.time.Year;
+
 public class MyCalendarGUI extends MyCalendar {
 
-    int startMonth = 0;
-    int startYear = 0;
+    int currentMonth = 0;
+    int currentYear = 0;
 
-    public MyCalendarGUI(int year, int month, int dayOfMonth) {
+    public MyCalendarGUI(int year, int month, int dayOfMonth)
+    {
         super(year, month, dayOfMonth);
-        startMonth = month;
-        startYear = year;
+        currentMonth = month;
+        currentYear = year;
     }
 
     public void nextDay() {
@@ -22,16 +25,20 @@ public class MyCalendarGUI extends MyCalendar {
     }
 
     public void currentMonth() {
-        set(MONTH, startMonth);
-        set(YEAR, startYear);
+        set(MONTH, currentMonth);
+        set(YEAR, currentYear);
     }
 
-    public void nextMonth() {
+    public void nextMonth()
+    {
+        currentMonth = (get(MONTH) + 1) % 12;
+
         set(DATE, 1);
         set(MONTH, (get(MONTH) + 1) % 12);
 
         if (get(MONTH) == 0) {
             set(YEAR, get(YEAR) + 1);
+            currentYear = get(YEAR) + 1;
         }
     }
 
@@ -39,15 +46,24 @@ public class MyCalendarGUI extends MyCalendar {
         set(DATE, 1);
 
         int month = get(MONTH) - 1;
+        currentMonth = month;
         if (month < 0) {
             set(MONTH, 11);
+            currentYear = get(YEAR) - 1;
             set(YEAR, get(YEAR) - 1);
         } else {
             set(MONTH, month);
         }
 
     }
-
+    public int getCurrentMonth()
+    {
+        return currentMonth;
+    }
+    public int getCurrentYear()
+    {
+        return currentYear;
+    }
     @Override
     public String toString() {
         return getMonthName() + " " + get(DATE) + ", " + get(YEAR);

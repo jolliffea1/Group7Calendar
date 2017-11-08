@@ -4,7 +4,6 @@
  */
 package com.NKU.group7calendar;
 
-
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,21 +13,52 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 public class TodoPane extends GridPane {
 	private ObservableList<TodoView> todoViews = FXCollections.observableArrayList();
     private ListView<TodoView> listView = new ListView<TodoView>(todoViews);
 
-    public TodoPane() {
+    public TodoPane(String username) {
     		super();
-    	
+    	    showTodo(username);
     		Button addButton = new Button("Add");
 
         TextField inputField = new TextField();
-        
+        if(username.equals(""))
+            addButton.setVisible(false);
         addButton.setOnAction(e -> {
         		addItem(inputField.getText());
+            try
+            {
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@citdb.nku.edu:1521:csc450", "khulenberm1", "csc66");
+                PreparedStatement pStmt = conn.prepareStatement("insert into todo(description,user_name) values(?,?)");//desc,date,start,end,username
+
+                pStmt.setString(1, inputField.getText());
+                pStmt.setString(2,username);
+
+                try
+                {
+                    pStmt.execute();
+                }
+                catch (SQLException sqle)
+                {
+                    System.out.println("Could not insert tuple. " + sqle);
+                }
+            }
+            catch (SQLException sqle)
+            {
+                System.out.println("Could not insert tuple. " + sqle);
+            }
+            catch(ClassNotFoundException e1)
+            {
+                System.out.println("ClassNotFoundException : " + e1);
+            }
             inputField.setText("");
-            inputField.requestFocus();
         });
 
         addButton.disableProperty().bind(Bindings.isEmpty(inputField.textProperty()));
@@ -48,5 +78,23 @@ public class TodoPane extends GridPane {
     		TodoView view = new TodoView(new TodoItem(item));
         todoViews.add(view);
     }
-    
+    private void showTodo(String username)
+    {
+        try {
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@citdb.nku.edu:1521:csc450", "khulenberm1", "csc66");
+            PreparedStatement pStmt = conn.prepareStatement("select Description from todo where user_name = ?");
+            pStmt.setString(1, username);
+            ResultSet rset = pStmt.executeQuery();
+            while(rset.next())
+            {
+                addItem(rset.getString("Description"));
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
