@@ -1,6 +1,5 @@
-package group7calendar.group7calendar;
+package com.NKU.group7calendar;
 
-import group7calendar.currentTimeFormatter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
