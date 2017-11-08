@@ -1,4 +1,4 @@
-package com.NKU.group7calendar;
+package group7calendar.group7calendar;
 
 import group7calendar.currentTimeFormatter;
 import javafx.animation.Animation;
