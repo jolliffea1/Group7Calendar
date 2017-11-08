@@ -1,21 +1,21 @@
-package group7calendar.group7calendar;
-
-//EventView
+package com.NKU.group7calendar;
+/*
+ * This class wraps a TodoItem into an HBox that can be used to decorate the item presented in the todo list.
+		*/
 
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
 
 public class EventView extends HBox {
-    private Events item;
+    private String item;
 
-    public Events getEvent() { return item; }
+    public String getEvent() { return item; }
 
-    public EventView(Events item) {
+    public EventView(String item) {
         super();
 
         this.item = item;
-
-        getChildren().addAll(new Label(item.printEvent()));
+        getChildren().addAll(new Label(item));
     }
 
 
