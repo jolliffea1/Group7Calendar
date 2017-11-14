@@ -1,9 +1,12 @@
 //package group7calendar;
 
 
+import javafx.animation.Animation;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -232,15 +235,18 @@ public class CalendarApp extends Application {
             Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
             currentTimeFormatter ct = new currentTimeFormatter();        
 
-            /*
-            final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
-                timeLabel.setText(ct.getCurrentTime(LocalTime.now(ZoneId.systemDefault()).format(dtf)));
-            }),
-                    new KeyFrame(Duration.seconds(1))
-            );    
+
+            final Timeline timeline = new Timeline();
             timeline.setCycleCount(Animation.INDEFINITE);
+            KeyFrame kf = new KeyFrame(javafx.util.Duration.seconds(1),
+                    new EventHandler<ActionEvent>() {
+                        public void handle(ActionEvent event) {
+                            timeLabel.setText(ct.getCurrentTime(LocalTime.now(ZoneId.systemDefault()).format(dtf)));
+                        }
+            });
+            timeline.getKeyFrames().add(kf);
             timeline.play();
-            */
+
 
             HBox leftPane = new HBox(timeLabel);
             leftPane.setAlignment(Pos.TOP_LEFT);
