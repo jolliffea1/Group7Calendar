@@ -1,4 +1,4 @@
-package com.NKU.group7calendar;
+//package com.NKU.group7calendar;
 
 import java.util.GregorianCalendar;
 public class MyCalendar extends GregorianCalendar {

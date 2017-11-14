@@ -1,4 +1,4 @@
-package com.NKU.group7calendar;
+//package group7calendar;
 
 
 import javafx.application.Application;
@@ -47,7 +47,7 @@ public class CalendarApp extends Application {
         MyCalendar mine = pane.getCal();
         BorderPane borderPane = new BorderPane(pane);
         //make event button
-        Button btMakeCalendarEvent = new Button("Make Event");
+        //Button btMakeCalendarEvent = new Button("Make Event");
         Button btlogin = new Button("Login");
         Button btRegister = new Button("Register");
 
@@ -98,6 +98,7 @@ public class CalendarApp extends Application {
             });
             secondStage.show();}
         });
+        /*
         btMakeCalendarEvent.setOnAction(e -> {
             if (!this.isShowingSecondaryWindow) {
                 this.isShowingSecondaryWindow = true;
@@ -113,7 +114,7 @@ public class CalendarApp extends Application {
                 });
                 secondStage.show();
             }
-        });
+        });*/
 
         // button to open the TodoList window
         Button btTodo = new Button("Todo List");
@@ -144,7 +145,7 @@ public class CalendarApp extends Application {
             if (!this.isShowingSecondaryWindow) {
                 this.isShowingSecondaryWindow = true;
                 EventPane secondaryLayout = new EventPane(username);
-                Scene secondScene = new Scene(secondaryLayout, 500.0D, 400.0D);
+                Scene secondScene = new Scene(secondaryLayout, 500.0D, 500.0D);
                 Stage secondStage = new Stage();
                 secondStage.setTitle("Events");
                 secondStage.setScene(secondScene);
@@ -168,7 +169,7 @@ public class CalendarApp extends Application {
         // add the buttons to the GUI
         HBox bottomPane = new HBox(btPrevious, btCurr, btNext, btTodo, btCreateEvent);
 
-        VBox rightPane = new VBox(btMakeCalendarEvent);
+        //VBox rightPane = new VBox(btMakeCalendarEvent);
         VBox leftPane = new VBox(btlogin,btRegister);
         leftPane.setAlignment(Pos.CENTER);
         leftPane.setSpacing(16);
@@ -178,7 +179,7 @@ public class CalendarApp extends Application {
         bottomPane.setSpacing(10);
         bottomPane.setPadding(new Insets(5));
         bottomPane.setAlignment(Pos.CENTER);
-        borderPane.setRight(rightPane);
+        //borderPane.setRight(rightPane);
         borderPane.setLeft(leftPane);
         borderPane.setBottom(bottomPane);
 

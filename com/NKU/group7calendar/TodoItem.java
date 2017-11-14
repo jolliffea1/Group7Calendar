@@ -3,16 +3,9 @@
  * Whenever the user adds a task to his todo list, a new TodoItem is created. 
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-package com.NKU.group7calendar;
-=======
-package group7calendar.group7calendar;
->>>>>>> currentTime
-=======
->>>>>>> database
 
-package com.NKU.group7calendar;
+
+//package com.NKU.group7calendar;
 public class TodoItem {
 	private String item;
 	private boolean isCompleted;

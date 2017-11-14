@@ -1,5 +1,3 @@
-package com.NKU.group7calendar;
-
 public class currentTimeFormatter {
     public String getCurrentTime(String currentTime) {
         if (currentTime != null && !currentTime.isEmpty()) {
