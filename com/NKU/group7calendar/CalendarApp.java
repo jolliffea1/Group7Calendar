@@ -205,11 +205,14 @@ public class CalendarApp extends Application {
         Label lblMonthYear;
         Button dayButtons[];
         Label[] lblDayOfWeek = new Label[7];
-
+        int year;
+        int month;
+        int myday;
         private CalendarPane(int month, int year) {
 
             cal = new MyCalendarGUI(year, month, 1);
-
+            this.year = year;
+            this.month = month;
             for (int i = 0; i < lblDayOfWeek.length; i++) {
                 lblDayOfWeek[i] = new Label(MyCalendarGUI.getDayOfWeekName(i));
                 add(lblDayOfWeek[i], i, 1);
@@ -315,10 +318,10 @@ public class CalendarApp extends Application {
             }
             for(int i = 0; i < dayButtons.length; i++)
             {
-                int myday = i + 1;
+                myday = i + 1;
                 dayButtons[i].setOnAction(e -> {
                         //this.isShowingEvents = true;
-                        EventPane secondaryLayout = new EventPane(MyCalendarGUI.MONTH+1, myday ,MyCalendarGUI.YEAR,username);
+                        EventPane secondaryLayout = new EventPane(month+1, myday ,year,username);
                         Scene secondScene = new Scene(secondaryLayout, 800.0D, 600.0D);
                         Stage secondStage = new Stage();
                         secondStage.setTitle("Events");
