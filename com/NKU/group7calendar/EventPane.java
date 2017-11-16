@@ -33,6 +33,7 @@ public class EventPane extends GridPane {
     public EventPane(String username)
     {
         super();
+
         GridPane eventGrid = new GridPane();
         eventGrid.setAlignment(Pos.CENTER);
         eventGrid.setHgap(10);
@@ -218,6 +219,7 @@ public class EventPane extends GridPane {
     {
 
         super();
+        showEvents(username,month,day,inYear);
         GridPane eventGrid = new GridPane();
         eventGrid.setAlignment(Pos.CENTER);
         eventGrid.setHgap(10);
