@@ -316,12 +316,13 @@ public class CalendarApp extends Application {
 
                 startDay++;
             }
-            for(int i = 0; i < dayButtons.length; i++)
+            int i;
+            for(i = 0; i < dayButtons.length; i++)
             {
                 myday = i + 1;
                 dayButtons[i].setOnAction(e -> {
                         //this.isShowingEvents = true;
-                        EventPane secondaryLayout = new EventPane(month+1, myday ,year,username);
+                        EventPane secondaryLayout = new EventPane(month+1, myday,year,username);
                         Scene secondScene = new Scene(secondaryLayout, 800.0D, 600.0D);
                         Stage secondStage = new Stage();
                         secondStage.setTitle("Events");
