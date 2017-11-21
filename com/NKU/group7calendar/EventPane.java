@@ -18,6 +18,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,13 +28,14 @@ public class EventPane extends GridPane {
 
     private ObservableList<String> amOrPm = FXCollections.observableArrayList("AM","PM");
     private int daysInMonth = 1;
-
+    private String username;
+    private ArrayList<String> desc = new ArrayList<>();
     private int year = Calendar.getInstance().get(Calendar.YEAR);
 
     public EventPane(String username)
     {
         super();
-
+        this.username = username;
         GridPane eventGrid = new GridPane();
         eventGrid.setAlignment(Pos.CENTER);
         eventGrid.setHgap(10);
@@ -219,6 +221,7 @@ public class EventPane extends GridPane {
     {
 
         super();
+        this.username = username;
         daysInMonth = getDaysInMonth(month,inYear);
         showEvents(username,month,day,inYear);
         GridPane eventGrid = new GridPane();
@@ -266,7 +269,7 @@ public class EventPane extends GridPane {
             daysInMonth = yearMonthObject.lengthOfMonth();
             dayInput.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(1, daysInMonth, 1,1));
         });
-       /* yearInput.setEditable(false);
+        /*yearInput.setEditable(false);
         monthInput.setEditable(false);
         dayInput.setEditable(false);*/
         Label monthBox = new Label("month:");
@@ -335,14 +338,22 @@ public class EventPane extends GridPane {
         Button saveButton = new Button("Save Event");
         GridPane.setRowIndex(saveButton, 8);
         GridPane.setColumnIndex(saveButton, 3);
-
+        Button deleteButton = new Button("delete Event");
+        TextField deleteInput = new TextField();
+        GridPane.setRowIndex(deleteButton, 8);
+        GridPane.setColumnIndex(deleteButton, 5);
+        GridPane.setRowIndex(deleteInput, 8);
+        GridPane.setColumnIndex(deleteInput, 4);
         eventGrid.getChildren().addAll(monthBox, dayBox, yearBox, startBox,
                 endBox, descripBox, saveButton, monthInput, dayInput, yearInput,
                 startTimeInput, startMeridies, endMeridies, endTimeInput,
-                descripInput);
+                descripInput,deleteButton,deleteInput);
 
-        if(username.equals(""))
+        if(username.equals("")) {
             saveButton.setVisible(false);
+            deleteButton.setVisible(false);
+            deleteInput.setVisible(false);
+        }
 
         saveButton.setOnAction(e -> {
             String wasAdded = "Event was not able to be added";
@@ -379,11 +390,27 @@ public class EventPane extends GridPane {
             {
                 System.out.println("ClassNotFoundException : " + e1);
             }
-            addEvents(wasAdded);
+            showEvents(username,month,day,year);
+            desc.add(descripInput.getText());
             descripInput.setText("");
 
 
         });
+        deleteButton.setOnAction(e ->
+        {
+            int mine = -1;
+            try {
+                mine = Integer.parseInt(deleteInput.getText());
+            }
+            catch (Exception exx)
+            {
+
+            }
+            if(mine != -1) {
+                deleteEvents(mine, inYear, month, day);
+                deleteInput.setText("");
+            }
+                });
         //Making sure the user has entered input before savebutton works
         if(descripInput.getText().isEmpty()
                 ||monthInput.valueProperty() == null
@@ -412,11 +439,13 @@ public class EventPane extends GridPane {
     private void showEvents(String username, int month, int day , int year)
     {
         try {
-
+            eventViews.clear();
+            desc.clear();
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@citdb.nku.edu:1521:csc450", "khulenberm1", "csc66");
             PreparedStatement pStmt = conn.prepareStatement("select Description,Start_time,End_time from events where user_name = ? and Date_ON = ?");
             pStmt.setString(1, username);
+            int c = 1;
             java.util.Date date = new Date(year, month, day);
             LocalDate EventDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             java.sql.Date sqlDate = java.sql.Date.valueOf( EventDate);
@@ -424,7 +453,9 @@ public class EventPane extends GridPane {
             ResultSet rset = pStmt.executeQuery();
             while(rset.next())
             {
-                addEvents("Start Time: " + rset.getString("Start_time") + " End Time: "+ rset.getString("End_time") + " Description: " + rset.getString("description"));
+                desc.add(rset.getString("description"));
+                addEvents(c+". "+"Start Time: " + rset.getString("Start_time") + " End Time: "+ rset.getString("End_time") + " Description: " + rset.getString("description"));
+                c++;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -432,6 +463,7 @@ public class EventPane extends GridPane {
             e.printStackTrace();
         }
     }
+
     //Creates a string array of times in 15 min increments
     private ObservableList createTimes(){
         ObservableList<String> times = FXCollections.observableArrayList();
@@ -466,6 +498,46 @@ public class EventPane extends GridPane {
             case 11:
                 return 30;
             default: return 0;
+        }
+    }
+    private void deleteEvents(int position,int year,int month,int day)
+    {
+        position = position -1;
+        boolean b = true;
+        try {
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@citdb.nku.edu:1521:csc450", "khulenberm1", "csc66");
+            PreparedStatement pStmt = conn.prepareStatement("DELETE FROM events WHERE Description = ?");//desc,date,start,end,username
+            // assign values to parameters
+            pStmt.setString(1, desc.get(position));
+            try
+            {
+                pStmt.execute();
+            }
+            catch (SQLException sqle)
+            {
+                System.out.println("Could not delete tuple. " + sqle);
+                b = false;
+            }
+        }
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            b = false;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            b = false;
+        }
+        catch(Exception e)
+        {
+            b = false;
+        }
+        if(b)
+        {
+            eventViews.clear();
+            desc.clear();
+            showEvents(username, month, day, year);
         }
     }
 

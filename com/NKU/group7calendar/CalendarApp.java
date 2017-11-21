@@ -127,7 +127,7 @@ public class CalendarApp extends Application {
         		isShowingSecondaryWindow = true;
 
         		TodoPane secondaryLayout = new TodoPane(username);
-            Scene secondScene = new Scene(secondaryLayout, 250, 350);
+            Scene secondScene = new Scene(secondaryLayout, 600, 350);
 
             Stage secondStage = new Stage();
             secondStage.setTitle("Todo List");
