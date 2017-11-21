@@ -207,7 +207,7 @@ public class CalendarApp extends Application {
         Label[] lblDayOfWeek = new Label[7];
         int year;
         int month;
-        int myday;
+        //int myday;
         private CalendarPane(int month, int year) {
 
             cal = new MyCalendarGUI(year, month, 1);
@@ -319,7 +319,7 @@ public class CalendarApp extends Application {
             int i;
             for(i = 0; i < dayButtons.length; i++)
             {
-                myday = i + 1;
+                 int myday = i + 1;
                 dayButtons[i].setOnAction(e -> {
                         //this.isShowingEvents = true;
                         EventPane secondaryLayout = new EventPane(month+1, myday,year,username);

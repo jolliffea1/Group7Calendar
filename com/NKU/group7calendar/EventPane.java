@@ -219,6 +219,7 @@ public class EventPane extends GridPane {
     {
 
         super();
+        daysInMonth = getDaysInMonth(month,inYear);
         showEvents(username,month,day,inYear);
         GridPane eventGrid = new GridPane();
         eventGrid.setAlignment(Pos.CENTER);
@@ -265,7 +266,9 @@ public class EventPane extends GridPane {
             daysInMonth = yearMonthObject.lengthOfMonth();
             dayInput.setValueFactory( new SpinnerValueFactory.IntegerSpinnerValueFactory(1, daysInMonth, 1,1));
         });
-
+       /* yearInput.setEditable(false);
+        monthInput.setEditable(false);
+        dayInput.setEditable(false);*/
         Label monthBox = new Label("month:");
         GridPane.setHalignment(monthBox, HPos.RIGHT);
         GridPane.setRowIndex(monthBox, 2);
@@ -442,6 +445,28 @@ public class EventPane extends GridPane {
             }
         }
         return times;
+    }
+    private int getDaysInMonth(int month,int year)
+    {
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                return 31;
+            case 2:
+                if (year% 4 == 0 && year%100 != 0) return 29;
+                else return 28;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                return 30;
+            default: return 0;
+        }
     }
 
 }
