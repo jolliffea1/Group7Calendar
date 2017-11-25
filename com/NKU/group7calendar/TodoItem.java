@@ -5,7 +5,8 @@
 
 
 
-//package com.NKU.group7calendar;
+package group7calendar;
+
 public class TodoItem {
 	private String item;
 	private boolean isCompleted;

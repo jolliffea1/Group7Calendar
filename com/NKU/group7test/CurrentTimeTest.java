@@ -1,6 +1,10 @@
-        import static org.junit.Assert.*;
-        import java.util.ArrayList;
-        import org.junit.Test;
+package group7test;
+
+import static org.junit.Assert.*;
+import java.util.ArrayList;
+
+import group7calendar.currentTimeFormatter;
+import org.junit.Test;
 
 public class CurrentTimeTest {
     public String setup(int listIndex) {

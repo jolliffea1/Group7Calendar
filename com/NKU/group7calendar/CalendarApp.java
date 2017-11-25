@@ -1,4 +1,4 @@
-//package group7calendar;
+package group7calendar;
 
 
 import javafx.animation.Animation;
