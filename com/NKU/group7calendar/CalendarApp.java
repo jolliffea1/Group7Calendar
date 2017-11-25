@@ -21,7 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
-import java.time.Duration;
+import javafx.util.Duration;
+
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -233,10 +234,10 @@ public class CalendarApp extends Application {
             for(int i = 0; i < dayButtons.length;i++)
                 dayButtons[i] = new Button("" + (i + 1));
 
-            //displays and updates current system time
+/*            //displays and updates current system time
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
-            currentTimeFormatter ct = new currentTimeFormatter();        
+            currentTimeFormatter ct = new currentTimeFormatter();
 
 
             final Timeline timeline = new Timeline();
@@ -253,8 +254,26 @@ public class CalendarApp extends Application {
 
             HBox leftPane = new HBox(timeLabel);
             leftPane.setAlignment(Pos.TOP_LEFT);
-            add(leftPane, 0, 0, 7, 1);
+            add(leftPane, 0, 0, 7, 1);*/
 
+
+            //displays and updates current system time
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
+            currentTimeFormatter ct = new currentTimeFormatter();
+
+            final Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+                timeLabel.setText(ct.getCurrentTime(LocalTime.now(ZoneId.systemDefault()).format(dtf)));
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+
+            //add timeline
+            HBox leftPane = new HBox(timeLabel);
+            leftPane.setAlignment(Pos.TOP_LEFT);
+            add(leftPane, 0, 0, 7, 1);
             // Title
             lblMonthYear = new Label(cal.getMonthName() + ", " + cal.get(Calendar.YEAR));
             HBox monthYearPane = new HBox(lblMonthYear);
