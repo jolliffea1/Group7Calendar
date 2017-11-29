@@ -1,11 +1,21 @@
-<project name="Group7Calendar" basedir="." default="main">
+<project name="Group7Calendar" basedir="." default="main" xmlns:jacoco="antlib:org.jacoco.ant">
     <property name="dir.src"     value="com"/>
     <property name="dir.build"   value="build"/>
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
-
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
-
+	
+	<property name="jaco.dir" location="./jacoco" />
+	<property name="result.dir" location="./target" />
+	<property name="result.classes.dir" location="${result.dir}/classes" />
+	<property name="result.report.dir" location="${result.dir}/site/jacoco" />
+	<property name="result.exec.file" location="${result.dir}/jacoco.exec" />
+	
+	<!-- Step 1: Import JaCoCo Ant tasks -->
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<classpath path="${jaco.dir}/lib/jacocoant.jar" />
+	</taskdef>
+	
     <target name="clean">
         <delete dir="${dir.build}"/>
     </target>
@@ -28,7 +38,46 @@
         <java jar="${dir.jar}/${ant.project.name}.jar" fork="true"/>
     </target>
 	
-	<target name="test" depends="main"></target>
+	<target name="test" depends="main">
+		<!-- Step 2: Wrap test execution with the JaCoCo coverage task -->
+		<jacoco:coverage destfile="${result.exec.file}">
+			<java classname="org.jacoco.examples.parser.Main" fork="true">
+				<classpath path="${result.classes.dir}" />
+				<arg value="2 * 3 + 4"/>
+				<arg value="2 + 3 * 4"/>
+				<arg value="(2 + 3) * 4"/>
+				<arg value="2 * 2 * 2 * 2"/>
+				<arg value="1 + 2 + 3 + 4"/>
+				<arg value="2 * 3 + 2 * 5"/>
+			</java>
+		</jacoco:coverage>
+	</target>
+	
+	<target name="report" depends="test">
+		<!-- Step 3: Create coverage report -->
+		<jacoco:report>
+
+			<!-- This task needs the collected execution data and ... -->
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<!-- the class files and optional source files ... -->
+			<structure name="JaCoCo Ant Example">
+				<classfiles>
+					<fileset dir="${result.classes.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+
+			<!-- to produce reports in different formats. -->
+			<html destdir="${result.report.dir}" />
+			<csv destfile="${result.report.dir}/report.csv" />
+			<xml destfile="${result.report.dir}/report.xml" />
+		</jacoco:report>
+	</target>
 
     <target name="clean-build" depends="clean,jar"/>
     <target name="main" depends="clean,run"/>
