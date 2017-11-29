@@ -53,6 +53,21 @@
     <target name="run" depends="jar">
         <java jar="${dir.jar}/${ant.project.name}.jar" fork="true"/>
     </target>
+
+    <!-- Test and build all files  -->
+    <!-- To run this: use "ant" (default) or "ant run" -->
+    <target name="run1" depends="build">
+        <junit printsummary="on" haltonfailure="yes">
+            <classpath>
+                <path refid="classpath.test" />
+                <pathelement location="${test.build.dir}"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <batchtest>
+                <fileset dir="${test.src.dir}" includes="**/*Test*.java" />
+            </batchtest>
+        </junit>
+    </target>
 	
 	<target name="test" depends="main"></target>
 
