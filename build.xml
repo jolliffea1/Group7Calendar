@@ -3,8 +3,18 @@
     <property name="dir.build"   value="build"/>
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
+    <property name="main.build.dir" value="build/group7test" />
 
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
+
+    <path id="classpath.base" />
+
+    <path id="classpath.test">
+        <pathelement location="lib/junit-4.11.jar" />
+        <pathelement location="lib/hamcrest-core-1.3.jar" />
+        <pathelement location="${main.build.dir}"/>
+        <path refid="classpath.base" />
+    </path>
 
     <target name="clean">
         <delete dir="${dir.build}"/>
@@ -32,4 +42,5 @@
 
     <target name="clean-build" depends="clean,jar"/>
     <target name="main" depends="clean,run"/>
+
 </project>
