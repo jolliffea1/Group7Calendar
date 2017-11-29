@@ -3,7 +3,11 @@
     <property name="dir.build"   value="build"/>
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
-    <property name="main.build.dir" value="build/group7test" />
+    <property name="main.build.dir" value="build/main" />
+    <property name="test.src.dir" value="com/NKU/group7test" />
+
+    <property name="test.build.dir" value="build/test" />
+
 
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
 
@@ -16,13 +20,25 @@
         <path refid="classpath.base" />
     </path>
 
-    <target name="clean">
-        <delete dir="${dir.build}"/>
-    </target>
-
     <target name="compile">
         <mkdir dir="${dir.classes}"/>
         <javac srcdir="${dir.src}" destdir="${dir.classes}"/>
+        <mkdir dir="${main.build.dir}"/>
+        <javac srcdir="${dir.src}" destdir="${main.build.dir}" includeantruntime="false">
+            <classpath refid="classpath.base"/>
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+        <mkdir dir="${test.build.dir}"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+            <classpath refid="classpath.test"/>
+        </javac>
+        <echo message="Build done" />
+    </target>
+
+    <target name="clean">
+        <delete dir="${dir.build}"/>
     </target>
 
     <target name="jar" depends="compile">
