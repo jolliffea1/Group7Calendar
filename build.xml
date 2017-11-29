@@ -5,8 +5,7 @@
     <property name="dir.jar"     value="${dir.build}/jar"/>
     <property name="main.build.dir" value="build/main" />
     <property name="test.src.dir" value="com/NKU/group7test" />
-
-    <property name="test.build.dir" value="build/test" />
+    <property name="test.build.dir" value="build/production/Group7Calendar/group7test" />
 
 
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
@@ -30,7 +29,6 @@
     </target>
 
     <target name="build" depends="compile">
-        <mkdir dir="${test.build.dir}"/>
         <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
             <classpath refid="classpath.test"/>
         </javac>
