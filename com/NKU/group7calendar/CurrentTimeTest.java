@@ -1,4 +1,4 @@
-package group7test;
+/*package group7calendar;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
@@ -57,5 +57,5 @@ public class CurrentTimeTest {
         System.out.println("test6 ran");
         assertEquals("abc", test);
     }
-}
+}*/
 
