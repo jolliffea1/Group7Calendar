@@ -5,7 +5,10 @@
     <property name="dir.jar"     value="${dir.build}/jar"/>
     <property name="dir.lib"     value="${dir.build}/lib"/>
     <property name="dir.lib1"    value="lib"/>
-    <property name="test.build.dir" value="${dir.build}/test"/>
+    <property name="main.build.dir" value="build/main"/>
+    <property name="main.src.dir" value="${dir.build}/main"/>
+    <property name="test.build.dir" value="build/test"/>
+    <property name="test.src.dir" value="${dir.build}/test"/>
 
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
 
@@ -13,16 +16,12 @@
         <delete dir="${dir.build}"/>
     </target>
 
-    <path id="classpath-test">
-        <pathelement location="lib/junit-4.12.jar"/>
-        <pathelement location="lib/hamcrest-core-1.3.jar"/>
-        <pathelement location="${dir.build}"/>
-    </path>
-
     <target name="compile">
         <mkdir dir="${dir.classes}"/>
-        <javac classpathref="classpath-test" srcdir="${dir.src}" destdir="${dir.classes}">
-            <classpath refid="classpath-test"/>
+        <mkdir dir="${dir.lib}"/>
+        <copydir src="${dir.lib1}" dest="${dir.lib}"/>
+        <javac srcdir="${dir.src}" destdir="${dir.classes}">
+            <classpath refid="classpath.test"/>
         </javac>
     </target>
 
@@ -35,28 +34,34 @@
         </jar>
     </target>
 
-    <target name="lib-copy" depends="jar">
-        <mkdir dir="${dir.lib}"/>
-        <copydir src="${dir.lib1}" dest="${dir.lib}"/>
+    <path id="classpath.test">
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="${main.build.dir}"/>
+    </path>
+
+    <target name="compile1" depends="jar">
+        <mkdir dir="${main.build.dir}"/>
+        <javac srcdir="${main.src.dir}" destdir="${main.build.dir}" includeantruntime="false"/>
     </target>
 
-    <target name="test-compile" depends="lib-copy">
+    <target name="test-compile" depends="compile1">
         <mkdir dir="${test.build.dir}"/>
-        <javac srcdir="${dir.src}" destdir="${test.build.dir}">
-            <classpath refid="classpath-test"/>
+        <javac srcdir="${test.src.dir}" destdir="${test.build.dir}" includeantruntime="false">
+            <classpath refid="classpath.test"/>
         </javac>
     </target>
 
     <target name="test1" depends="test-compile">
         <junit printsummary="on" haltonfailure="yes" fork="true">
             <classpath>
-                <path refid="classpath-test"/>
+                <path refid="classpath.test"/>
                 <pathelement location="${test.build.dir}"/>
             </classpath>
             <formatter type="brief" usefile="false" />
-            <!--<batchtest>
-                <fileset dir="${dir.src}" includes="**/*MainTest.java" />
-            </batchtest> -->
+            <batchtest>
+                <fileset dir="${test.src.dir}" includes="**/*Test.java" />
+            </batchtest>
         </junit>
     </target>
 
