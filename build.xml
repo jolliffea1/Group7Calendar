@@ -3,6 +3,8 @@
     <property name="dir.build"   value="build"/>
     <property name="dir.classes" value="${dir.build}/classes"/>
     <property name="dir.jar"     value="${dir.build}/jar"/>
+    <property name="dir.lib"     value="${dir.build}/lib"/>
+    <property name="dir.lib1"    value="lib"/>
 
     <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp"/>
 
@@ -10,9 +12,17 @@
         <delete dir="${dir.build}"/>
     </target>
 
+    <path id="classpath.test">
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="${dir.build}"/>
+    </path>
+
     <target name="compile">
         <mkdir dir="${dir.classes}"/>
-        <javac srcdir="${dir.src}" destdir="${dir.classes}"/>
+        <javac classpathref="classpath.test" srcdir="${dir.src}" destdir="${dir.classes}">
+            <classpath refid="classpath.test"/>
+        </javac>
     </target>
 
     <target name="jar" depends="compile">
@@ -24,7 +34,26 @@
         </jar>
     </target>
 
-    <target name="run" depends="jar">
+    <target name="lib-copy" depends="jar">
+        <mkdir dir="${dir.lib}"/>
+        <copydir src="${dir.lib1}" dest="${dir.lib}">
+        </copydir>
+    </target>
+
+    <target name="test1" depends="lib-copy">
+        <junit printsummary="on" haltonfailure="yes" fork="true">
+            <classpath>
+                <path refid="classpath.test"/>
+                <pathelement location="${dir.classes}"/>
+            </classpath>
+            <formatter type="brief" usefile="false" />
+            <batchtest>
+                <fileset dir="${dir.classes}" includes="**/*Test.java" />
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="run" depends="test1">
         <java jar="${dir.jar}/${ant.project.name}.jar" fork="true"/>
     </target>
 
