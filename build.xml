@@ -9,7 +9,7 @@
     <property name="main.src.dir" value="${dir.build}/main"/>
     <property name="test.build.dir" value="build/test"/>
     <property name="test.src.dir" value="${dir.build}/test"/>
-    <property name="main-class"  value="com.NKU.group7calendar.group7calendar.CalendarApp.java"/>
+    <property name="main-class"  value="CalendarApp.java"/>
 	
 	<property name="jaco.dir" location="./jacoco" />
 	<property name="result.dir" location="./target" />
@@ -82,13 +82,13 @@
 	<target name="test" depends="main">
 		<!-- Step 2: Wrap test execution with the JaCoCo coverage task -->
 		<jacoco:coverage destfile="${result.exec.file}">
-			<java classname="com.NKU.group7calendar.group7calendar.CalendarTest.java" fork="true">
+			<java classname="CalendarTest.java" fork="true">
 				<classpath path="${result.classes.dir}" />
 			</java>
 		</jacoco:coverage>
 	</target>
 	
-	<target name="report">
+	<target name="report" depends="test">
 		<!-- Step 3: Create coverage report -->
 		<jacoco:report>
 
