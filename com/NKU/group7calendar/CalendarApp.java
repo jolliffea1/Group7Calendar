@@ -273,11 +273,6 @@ public class CalendarApp extends Application {
             HBox leftPane = new HBox(timeLabel);
             leftPane.setAlignment(Pos.TOP_LEFT);
             add(leftPane, 0, 0, 7, 1);
-
-            //add timeline
-            HBox leftPane = new HBox(timeLabel);
-            leftPane.setAlignment(Pos.TOP_LEFT);
-            add(leftPane, 0, 0, 7, 1);
             // Title
             lblMonthYear = new Label(cal.getMonthName() + ", " + cal.get(Calendar.YEAR));
             HBox monthYearPane = new HBox(lblMonthYear);
