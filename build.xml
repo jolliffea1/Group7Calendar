@@ -88,7 +88,7 @@
 		</jacoco:coverage>
 	</target>
 	
-	<target name="report" depends="test">
+	<target name="report">
 		<!-- Step 3: Create coverage report -->
 		<jacoco:report>
 
