@@ -1,4 +1,4 @@
-//package com.NKU.group7calendar;
+package group7calendar;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

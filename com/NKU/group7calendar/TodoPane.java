@@ -2,7 +2,7 @@
  * This class presents items in the todo list to the user.
  * The new window opened to show the todo list instantiates its stage with a TodoPane.
  */
-//package com.NKU.group7calendar;
+package group7calendar;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;

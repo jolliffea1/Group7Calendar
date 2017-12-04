@@ -1,4 +1,4 @@
-//package group7calendar;
+package group7calendar;
 
 
 import javafx.animation.Animation;
@@ -256,7 +256,10 @@ public class CalendarApp extends Application {
             leftPane.setAlignment(Pos.TOP_LEFT);
             add(leftPane, 0, 0, 7, 1);*/
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> calendarTest
             //displays and updates current system time
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             Label timeLabel = new Label(LocalTime.now(ZoneId.systemDefault()).format(dtf));
@@ -269,6 +272,14 @@ public class CalendarApp extends Application {
             );
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
+<<<<<<< HEAD
+=======
+
+            //add timeline
+            HBox leftPane = new HBox(timeLabel);
+            leftPane.setAlignment(Pos.TOP_LEFT);
+            add(leftPane, 0, 0, 7, 1);
+>>>>>>> calendarTest
 
             //add timeline
             HBox leftPane = new HBox(timeLabel);
