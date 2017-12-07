@@ -1,5 +1,5 @@
 language: java
-install: ant compile
+install: ant test1
 jdk: oraclejdk8
 
 after_success:
